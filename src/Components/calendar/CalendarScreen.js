@@ -46,6 +46,7 @@ export const CalendarScreen = () => {
   }
 
   const onViewChange = (e) => {
+    setLastView(e);
     localStorage.setItem('lastView', e);
   }
 
