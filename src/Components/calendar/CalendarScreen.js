@@ -7,30 +7,21 @@ import { Navbar } from '../ui/Navbar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
-import { useDispatch } from 'react-redux';
-import {uiOpenModal } from '../../redux/actions/ui';
-import {  eventSetActive } from '../../redux/actions/events';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiOpenModal } from '../../redux/actions/ui';
+import { eventSetActive } from '../../redux/actions/events';
 import { AddNewFab } from '../ui/AddNewFab';
 
 
 
 const localizer = momentLocalizer(moment);
 
-const events = [{
-  title: 'Cumpleaños del jefe',
-  start: moment().toDate(),
-  end: moment().add(2, 'hours').toDate(),
-  bgcolor: '#fafafa',
-  notes: 'Comprar el pastel',
-  user: {
-    _id: '123',
-    name: 'Daniel'
-  }
-}]
+
 
 export const CalendarScreen = () => {
   
   const dispatch = useDispatch();
+  const {events} = useSelector(state => state.calendar);
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
 
   const eventStyleGetter = ( event, start, end, isSelected ) => {
@@ -50,7 +41,6 @@ export const CalendarScreen = () => {
   
   const onSelect = (e) => {
     dispatch(eventSetActive(e))
-    dispatch(uiOpenModal());
   }
 
   const onViewChange = (e) => {
